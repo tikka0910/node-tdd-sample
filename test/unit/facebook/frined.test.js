@@ -2,7 +2,7 @@ import FacebookHelper from '../../../src/facebook/helper.js';
 import fb_db from '../../../src/models/friend.js';
 
 
-describe.only('fb friends store in databases', function(){
+describe('fb friends store in databases', function(){
   let facebookHelper = null;
   let f_list = null;
   let friends = null;
@@ -10,7 +10,7 @@ describe.only('fb friends store in databases', function(){
 
   before( async function(done){
     let userId = '790001111011196';
-    let token  = 'EAACEdEose0cBAGE92heZARwp3Osx8uLBUrTgVtqrkKuXveXfICBTM998YWeFZBB16khTh3asgimvemRV8tjerqR3d0xeYt8FWN5pPZCgTkUnDZCoRQ9f2NejIDbSA00el6yZAOKf382kT9tPJHRyq0dwbmY6vAJDlNQr6g5On8H08seudVc6MkWMbmfbCTWgZD';
+    let token  = 'EAACEdEose0cBAEVat56xbrkqT6hJqZBYeVNYmTqQmXxBPRkDeQXGZAR19nHVK4wr4LBMcUULfGLVYXsHpBhFmfiVv4ICjm8vC8RJuqVoKB6IIscBbzdZA164NMy9U22QjGFuu6U9jPh9oVJlWZBn1lWvHcbfSmHwgtNu7yAvVgZDZD';
     models = await fb_db();
     facebookHelper = await new FacebookHelper({userId, token});
 
