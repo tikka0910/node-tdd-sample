@@ -10,7 +10,7 @@ describe('fb friends store in databases', function(){
 
   before( async function(done){
     let userId = '790001111011196';
-    let token  = 'EAACEdEose0cBAEVat56xbrkqT6hJqZBYeVNYmTqQmXxBPRkDeQXGZAR19nHVK4wr4LBMcUULfGLVYXsHpBhFmfiVv4ICjm8vC8RJuqVoKB6IIscBbzdZA164NMy9U22QjGFuu6U9jPh9oVJlWZBn1lWvHcbfSmHwgtNu7yAvVgZDZD';
+    let token  = 'EAACEdEose0cBALTW5M8EvBNi0MvfRQd6fYzZCrOx0gQxhjxrVKG6hZBkjCqm6EZCPoV2uMVz60MYzJQ5a7vQEQUf5Hr3mAiImNlPGCycAFafhFUe6ubBVAtrWrAWD8CDR9CZBcMSLIQ2NicdHKpjOs3PqqNR1JX3Rds3NZAy5KgZDZD';
     models = await fb_db();
     facebookHelper = await new FacebookHelper({userId, token});
 
