@@ -10,7 +10,7 @@ describe('fb friends store in databases', function(){
 
   before( async function(done){
     let userId = '790001111011196';
-    let token  = 'EAACEdEose0cBAFCUybcwMS5NJsxt26wXcUtzZBHvEsqnvu37TxXZCLvrJHFMD0mCZA6FeTDj0rV8EMw6ncOg75BGYf5RG7DyjLtBhpNwbYXLNP3KjgwP6i9KMmKJawxayri28Cq8iNOBpYWrkU7Sa31ZCGMKrIiM9ZCFsY2bi3yvF6tP053eZB7pGjHSvj8F8ZD';
+    let token  = 'EAACEdEose0cBAAJxqE1YFlC2t47PSHAKnAT2kr9J90j0fFYnjGTwn9u9dk9ZB7UyOpSjrZB6LE1Gj3XgeruLyNYADZCiBAlX2muZAQyZCUHMZASv28FPRyxYuxZBq01eGLJnFYgsL2ImmeNgB3HrGFMb12ZC60EbdILHjL9ZCCy1MvgZDZD';
     models = await task1_initModel();
     facebookHelper = await new FacebookHelper({userId, token});
 
@@ -24,7 +24,16 @@ describe('fb friends store in databases', function(){
         //f_list => my friends List
         f_list = await facebookHelper.getFriends();
         //write friends in to database.
-        friends = await models.Friend.bulkCreate(f_list);
+        for(let i = 0, len = f_list.length; i < len; i++){
+          await models.Friend.create({
+            name: f_list[i].name,
+            facebookId: f_list[i].id,
+            email: 'nuknow@email.com'
+          });
+        }
+
+        friends = await models.Friend.findAll();
+
         //friend numbers should equal database record numbers
         friends.length.should.equal(f_list.length);
         done();
@@ -36,14 +45,13 @@ describe('fb friends store in databases', function(){
   });
 
   describe('資料庫操作', () => {
-    it('從資料庫中查詢「朋友」', async (done) => {
+    it('從資料庫中取得所有「朋友」', async (done) => {
       try{
+        let result = true;
+        friends = await models.Friend.findAll();
+        //從 資料庫取得朋友清單 ,應該要與FB API 取得的朋友清單一致
 
-        let friend_1 = f_list[0].id;
-        let friend_name = f_list[0].name;
-        let result = await models.Friend.findById( friend_1 );
-        //從 FB API取得的朋友id ,利用id查詢DB, API 與 DB 名字應該要相同
-        result.name.should.equal(friend_name);
+        friends.length.should.be.equal(f_list.length);
         done();
       }
       catch(e){
@@ -54,7 +62,7 @@ describe('fb friends store in databases', function(){
     it('將朋友的email更新成 hellojs@trunk.studio', async (done) => {
       try{
         let friend_2 = f_list[1].id;
-        let f2_data = await models.Friend.findById( friend_2 );
+        let f2_data = await models.Friend.findOne( {where: { facebookId: friend_2 } } );
         f2_data.email = 'hellojs@trunk.studio';
         let result = await f2_data.save();
 
